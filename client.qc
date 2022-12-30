@@ -106,7 +106,7 @@ void() PlayerPostThink =
 	{
 		self.keyflags = 0;
 		if (self.test_org_z < self.origin_z)
-			self.keyflags = self.keyflags | KEY_UP;
+				self.keyflags = self.keyflags | KEY_UP;
 		else if (self.test_org_z > self.origin_z)
 			self.keyflags = self.keyflags | KEY_DOWN;
 		tree = self.test_org - self.origin;

@@ -91,10 +91,21 @@ void() player_think =
 
 		if (self.keyflags & (KEY_UP | KEY_DOWN) && self.lock_finished < time && self.pain_finished < time && !self.char.flypain)
 		{
-			if (self.keyflags & KEY_UP)
+			if (self.keyflags & KEY_UP){
 				self.char.velocity_y = 0 - (self.char.speed);
+				//moi - turn body accordingly
+				if !(self.keyflags & (KEY_LEFT | KEY_RIGHT)){
+					self.char.angles_y=270;
+				}
+			}
 			else
+			{
 				self.char.velocity_y = self.char.speed;
+				//moi - turn body accordingly
+				if !(self.keyflags & (KEY_LEFT | KEY_RIGHT)){	
+				self.char.angles_y=90;
+				}
+			}
 		}
 		else
 			self.char.velocity_y = 0;
