@@ -1,0 +1,30 @@
+- The enemys are non solid and only go solid for the same frame that the trace_line for the
+players attack is sent out or when the player jump kicks.
+- The AI is simple and needs more fuzzy logic so they do not follow the same pattern.
+- findradius() is used for the players jump kick and allows you to hit numerous enemies at
+once so long as they're near eachother.
+- There are velocity bugs that need to be fixed up (nothing serious).
+- Ignore the level complaining about the missing barrel, I removed it due to too many
+crazy bugs with it.
+- The map is set to a certain angle, so if you design a map and the camera is facing an odd direction then rotate the map till it's correct.
+- There may be some bugs in the grabbing code.
+- Walking animations are not played in DarkPlaces, this is an ENGINE bug and not the fault
+of the 2D camera
+
+Remember, this is a mod I was constructing and never really got it off the ground, I decided  to choose this mod to release as the 2D Camera because it's basic, shows quite a bit of what it can do, and the source is fairly easy to read.
+
+About the dummy player:
+
+	The way the "dummy" player works is the actual player is the camera, the key 	strokes of the player are sent to the dummy and the dummy responds accordingly. The 	camera can be modified easily to track slower/faster and how much to allow the 	dummy player to leave the screen before the camera begins tracking.
+
+Hint for QuakeC programmers:
+
+	Make sure when you want to call a function to the bot you do so properly, if you're 	calling it from the camera/real player make sure you use self.char, but if the 		dummy is calling a function from just itself only use self.!
+
+	Using trace line will only hit 1 entity at once while using FindRadius will hit
+	multiple enemies at once, this is why when you're punching the thugs in the street 	when they crowd into eachother only one gets hurt at a time, the jump kick is using
+	findradius which hits multiple entities at once.
+
+	The camera and player are the same!
+
+	Study the code carefully and learn!

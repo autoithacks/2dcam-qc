@@ -1,0 +1,14 @@
+../progs.dat
+
+defs.qc
+subs.qc
+misc.qc
+main.qc
+damage.qc
+weapons.qc
+client.qc
+dummys.qc
+ai.qc
+chars/player.qc
+chars/aitest.qc
+misc/impulses.qc
