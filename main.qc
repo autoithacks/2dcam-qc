@@ -17,6 +17,9 @@ void() worldspawn =
 	precache_model("progs/missile.mdl");
 	precache_model("progs/s_bubble.spr");	
 
+	//moi puck from hockey mod
+	precache_model("progs/puck.mdl");	
+
 	precache_sound("demon/dland2.wav");
 	precache_sound("weapons/sgun1.wav");
 	//Forced Normal Quake precaches

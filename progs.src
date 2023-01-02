@@ -11,4 +11,5 @@ dummys.qc
 ai.qc
 chars/player.qc
 chars/aitest.qc
+chars/puck.qc
 misc/impulses.qc
