@@ -28,6 +28,8 @@ $frame grabcombo1 grabcombo2 grabcombo3 grabcombo4 grabcombo5 grabcombo6 grabcom
 $frame bigpickup1 bigpickup2 bigpickup3
 $frame bigthrow1 bigthrow2
 
+
+float lastdirection;
 void() player_spawn = {};
 void() player_move;
 void(float dmg, float dist) FireMelee;
@@ -65,6 +67,28 @@ void() Setup_Dummy =
 	droptofloor();	
 };
 
+
+void() turn_direction_with_puck(float searchradius, string direction_name, float delta){
+	local	entity	searchfor;
+	searchfor = findradius(self.origin, searchradius);				
+	while (searchfor)
+	{
+		if(searchfor.classname=="puck"){
+			dprint ("found puck turning ");
+			dprint (direction_name);
+			dprint (searchfor.classname);
+			dprint ("\n");
+			//searchfor.origin+=delta;
+			searchfor.velocity = -((searchfor.velocity * delta));
+			searchfor.velocity_z = (searchfor.velocity_z + 50.000);
+			
+			return;
+	}
+	searchfor = searchfor.chain;
+	}
+}
+
+
 void() player_think =
 {
 	if (!self.char.flypain)
@@ -79,11 +103,27 @@ void() player_think =
 			{
 				self.char.velocity_x = 0 - (self.char.speed);
 				self.char.angles_y = 180;
+				if(lastdirection!=KEY_RIGHT){
+					dprint ("turn right ");
+					dprint (ftos(time));
+					dprint (" \n");
+				}			
+				lastdirection=KEY_RIGHT;
 			}
 			else
 			{
 				self.char.velocity_x = self.char.speed;
 				self.char.angles_y = 0;
+
+				//moi look for puck
+				if(lastdirection!=KEY_LEFT){
+					dprint ("turn left ");
+					dprint (ftos(time));
+					dprint ("\n");
+					lastdirection=KEY_LEFT;
+					turn_direction_with_puck(250, " left ", -10);
+				}
+				
 			}
 		}
 		else

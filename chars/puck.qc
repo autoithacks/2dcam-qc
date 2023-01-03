@@ -11,10 +11,11 @@
 void() puck_touch =
 {   if ( (other.classname == "player")  || (other.classname == "thug")     )    {
 	self.goalentity=other;
-	dprint ("puck owner: ");
+	
+	/*dprint ("puck owner: ");
 	dprint (self.goalentity.classname);
 	dprint ("\n");
-
+	*/
 	if ( (self.velocity_z < FALSE) ) {
 	   self.velocity = (CONTENT_EMPTY * self.velocity);
 	} 

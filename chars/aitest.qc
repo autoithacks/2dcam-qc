@@ -56,6 +56,9 @@ void() enemy_thug =
 	self.ai_jumpkick = JumpKickCheck;
 	self.health = 10;
 
+	//moi
+	self.classname="thug";
+
 	droptofloor();
 	enemy_start();
 };
