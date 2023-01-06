@@ -46,10 +46,11 @@ void() Setup_Dummy =
 
 	dummy = spawn();
 	spoint = find(world, classname, "player_spawn");
-
 	setorigin(dummy, spoint.origin);
 	setmodel(dummy, "progs/playr.mdl");
-	setsize(dummy, VEC_HULL_MIN, VEC_HULL_MAX);
+	//vector	VEC_HULL_MIN = '-16 -16 -24';
+	//vector	VEC_HULL_MAX = '16 16 32';
+	setsize(dummy, '-8 -8 -24', '16 16 32');
 	dummy.solid = SOLID_SLIDEBOX;
 	dummy.takedamage = DAMAGE_AIM;
 	dummy.owner = self;
@@ -68,20 +69,34 @@ void() Setup_Dummy =
 };
 
 
-void() turn_direction_with_puck(float searchradius, string direction_name, float delta){
+void() turn_direction_with_puck(float searchradius, string direction_name, float delta_x, float delta_y){
 	local	entity	searchfor;
 	searchfor = findradius(self.origin, searchradius);				
 	while (searchfor)
 	{
 		if(searchfor.classname=="puck"){
+
+			//if(searchfor.flags & FL_ONGROUND){
+			searchfor.velocity = '0 0 0';
 			dprint ("found puck turning ");
 			dprint (direction_name);
 			dprint (searchfor.classname);
 			dprint ("\n");
+
+			self.char.origin_x=self.char.origin_x+(delta_x);
+					
 			//searchfor.origin+=delta;
-			searchfor.velocity = -((searchfor.velocity * delta));
-			searchfor.velocity_z = (searchfor.velocity_z + 50.000);
+//			self.solid=SOLID_NOT;
+//			searchfor.velocity_x = self.char.velocity_x;
+//			searchfor.velocity_z = searchfor.velocity_z+400;
+//			searchfor.solid=SOLID_NOT;
+			//searchfor.origin_x=self.char.origin_x+delta_x;
+			//searchfor.origin_y=self.char.origin_y+delta_y;
+//			searchfor.origin_z=self.char.origin_z+50;
+//			searchfor.velocity_x = self.char.speed*2;;
 			
+			//searchfor.velocity = -((searchfor.velocity + 10));
+			//searchfor.velocity_z = (searchfor.velocity_z + 50.000);
 			return;
 	}
 	searchfor = searchfor.chain;
@@ -104,9 +119,11 @@ void() player_think =
 				self.char.velocity_x = 0 - (self.char.speed);
 				self.char.angles_y = 180;
 				if(lastdirection!=KEY_RIGHT){
-					dprint ("turn right ");
-					dprint (ftos(time));
-					dprint (" \n");
+					//dprint ("turn right ");
+					//dprint (ftos(time));
+					//dprint (" \n");
+					// //self.nextthink = time + 0.5;
+					turn_direction_with_puck(175, " right ", 60,0);
 				}			
 				lastdirection=KEY_RIGHT;
 			}
@@ -117,13 +134,13 @@ void() player_think =
 
 				//moi look for puck
 				if(lastdirection!=KEY_LEFT){
-					dprint ("turn left ");
-					dprint (ftos(time));
-					dprint ("\n");
-					lastdirection=KEY_LEFT;
-					turn_direction_with_puck(250, " left ", -10);
+					//dprint ("turn left ");
+					//dprint (ftos(time));
+					//dprint ("\n");
+					// //self.nextthink = time + 0.5;
+					turn_direction_with_puck(175, " left ", -60,0);
 				}
-				
+				lastdirection=KEY_LEFT;
 			}
 		}
 		else

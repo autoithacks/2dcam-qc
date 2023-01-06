@@ -47,6 +47,7 @@ void() MakeSolidList =
 	y = find(world, netname, "solid");
 	while (y)
 	{
+		if(y.classname=="puck") continue;
 		y.solid = SOLID_SLIDEBOX;
 		setorigin(y, y.origin);
 		y = find(y, netname, "solid");
@@ -62,6 +63,8 @@ void() UnmakeSolidList =
 	y = find(world, netname, "solid");
 	while (y)
 	{
+		
+		if(y.classname=="puck") continue;
 		y.solid = SOLID_TRIGGER;
 		setorigin(y, y.origin);
 		y = find(y, netname, "solid");

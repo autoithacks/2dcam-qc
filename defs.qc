@@ -402,6 +402,7 @@ void() SUB_Remove = {remove(self);};
 .float keyflags;
 .entity lock_view;
 
+
 .void() ch_pain;
 .void() ch_grabbed;
 
@@ -427,3 +428,6 @@ float W_KICK = 1;
 float W_PUNCH2 = 2; 
 float W_KICK2 = 4;
 float W_COMBO1 = 8;
+
+
+void() puck_touch;

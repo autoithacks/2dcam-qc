@@ -7,29 +7,31 @@
 //+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-+
 
 
+
+
 //taken from Quake Soccer mod:
 void() puck_touch =
-{   if ( (other.classname == "player")  || (other.classname == "thug")     )    {
-	self.goalentity=other;
+{  
+	//self.goalentity=other;
 	
 	/*dprint ("puck owner: ");
 	dprint (self.goalentity.classname);
 	dprint ("\n");
 	*/
-	if ( (self.velocity_z < FALSE) ) {
+	if ( (self.velocity_z < 0) ) {
 	   self.velocity = (CONTENT_EMPTY * self.velocity);
 	} 
 	else {
 	   if ( (self.flags & FL_ONGROUND) ) {
 		  self.flags = (self.flags - FL_ONGROUND);
 	   }
-	   self.velocity = (self.velocity + (other.velocity * 0.250));
-	   self.velocity_z = (self.velocity_z + 50.000);
-	   self.enemy = other;
+	   self.velocity = (self.velocity + (other.velocity * 0.5));
+	   self.velocity_z = (self.velocity_z + 25.000);
+	  // self.enemy = other;
 
 	}
 
- }
+ 
 
  if ( ((self.flags & FL_ONGROUND) || (self.velocity == VEC_ORIGIN)) ) {
 	return ;
@@ -44,6 +46,13 @@ void() puck_touch =
 
 void() puck_think =
 {
+	if(time | 4)
+	{
+		dprint ("puck reset: ");
+		dprint (self.goalentity.netname);
+		dprint ("\n");
+
+	}
 
 	if (self.goalentity.classname=="player"){
 		dprint ("puck following owner: ");
@@ -56,12 +65,14 @@ void() puck_think =
 
 void() puck_stand =
 {
+		return
 		dprint ("puck stand: ");
 		dprint (self.goalentity.netname);
 		dprint ("\n");
 }
 void() puck_atta =
 {
+		return
 		dprint ("puck atta: ");
 		dprint (self.goalentity.netname);
 		dprint ("\n");
