@@ -12,7 +12,7 @@
 //taken from Quake Soccer mod:
 void() puck_touch =
 {  
-	//self.goalentity=other;
+	self.goalentity=other;
 	
 	/*dprint ("puck owner: ");
 	dprint (self.goalentity.classname);
@@ -44,22 +44,48 @@ void() puck_touch =
 
 }
 
-void() puck_think =
+float(float a, float n) mod = {
+    return a - (n * floor(a / n));
+};
+
+void() puck_think = [0 , puck_think2]
 {
-	if(time | 4)
-	{
-		dprint ("puck reset: ");
+
+		dprint ("puck set: ");
 		dprint (self.goalentity.netname);
 		dprint ("\n");
 
-	}
 
-	if (self.goalentity.classname=="player"){
-		dprint ("puck following owner: ");
+}
+
+void() puck_think2 =
+{
+	
+		//dprint ("puck reset: ");
+	///	dprint (" velocityx= ");
+		//dprint (ftos((self.flags)));
+		//dprint ("\n");
+
+	if (self.velocity=='0 0 0' && self.goalentity.netname!="player"){
+		//if (random()>0.8){
+		//self.velocity=(self.velocity+'1 1 1')*'5 15 5';
+		//}
+		
+		dprint ("puck stuck: ");
 		dprint (self.goalentity.netname);
 		dprint ("\n");
-	}
 
+	if(mod(time,2)){	
+		vector org=self.origin;
+		//org.origin_z=100;
+		remove(self) ;
+		puck_respawn(org);
+	}
+	
+
+	}
+	//self.nextthink = time + 2.1;
+	puck_think();
 
 }
 
@@ -95,7 +121,7 @@ void() puck =
 	puck.classname = "puck";
 	puck.netname = "puck";
 	puck.think=puck_think;
-	puck.nextthink = time+0.5;
+	puck.nextthink = time+2;
 	puck.goalentity=puck;
 	puck.th_stand = puck_stand;
 	puck.th_melee = puck_atta;
@@ -105,6 +131,31 @@ void() puck =
 
 }; 
 
+
+void(vector org) puck_respawn =
+{
+
+	local entity puck;
+
+	puck = spawn();
+	setorigin(puck, org);
+	
+	setmodel(puck, "progs/puck.mdl");
+	puck.solid = SOLID_BBOX;
+	puck.movetype = MOVETYPE_BOUNCE;
+	puck.touch = puck_touch;
+	puck.classname = "puck";
+	puck.netname = "puck";
+	puck.think=puck_think;
+	puck.nextthink = time+2;
+	puck.goalentity=puck;
+	puck.th_stand = puck_stand;
+	puck.th_melee = puck_atta;
+	setsize (puck,'-16.000 -16.000 0.000',VEC_HULL_MAX);
+
+	//puck.effects = EF_BRIGHTFIELD;
+
+}; 
 
 
 //unused    -------------------------------------------

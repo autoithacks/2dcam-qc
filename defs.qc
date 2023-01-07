@@ -431,3 +431,5 @@ float W_COMBO1 = 8;
 
 
 void() puck_touch;
+void() puck;
+void(vector org) puck_respawn;
